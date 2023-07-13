@@ -67,32 +67,31 @@ class AppInterceptors extends Interceptor {
     _log.e(err.requestOptions.data, functionName: "onError[2]");
     _log.e(err.response?.data, functionName: "onError[3]");
     _log.e(err.response?.statusCode, functionName: "onError[4]");
-   
-      switch (err.type) {
-        case DioExceptionType.connectionTimeout:
-        case DioExceptionType.sendTimeout:
-        case DioExceptionType.receiveTimeout:
-        case DioExceptionType.badCertificate:
-          // reasign err variable
-          err = DeadlineExceededException(err.requestOptions);
-          break;
-        case DioExceptionType.badResponse:
-          try {
-            checkStatusCode(err.requestOptions, err.response);
-          } on DioException catch (failure) {
-            // reasign err variable
-            err = failure;
-          }
 
-          break;
-        case DioExceptionType.cancel:
-          break;
-        case DioExceptionType.unknown:
-          _log.e(err.message, functionName: "onError[other]");
-          err = NoInternetConnectionException(err.requestOptions);
-        case DioExceptionType.connectionError:
-          err = NoInternetConnectionException(err.requestOptions);
-      
+    switch (err.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.badCertificate:
+        // reasign err variable
+        err = DeadlineExceededException(err.requestOptions);
+        break;
+      case DioExceptionType.badResponse:
+        try {
+          checkStatusCode(err.requestOptions, err.response);
+        } on DioException catch (failure) {
+          // reasign err variable
+          err = failure;
+        }
+
+        break;
+      case DioExceptionType.cancel:
+        break;
+      case DioExceptionType.unknown:
+        _log.e(err.message, functionName: "onError[other]");
+        err = NoInternetConnectionException(err.requestOptions);
+      case DioExceptionType.connectionError:
+        err = NoInternetConnectionException(err.requestOptions);
     }
     //continue
     return handler.next(err);
@@ -105,6 +104,7 @@ class AppInterceptors extends Interceptor {
         case 204:
         case 201:
           break;
+        //throw UserDefinedException(message: response!.data["message"],title: "Error");
         case 400:
           throw BadRequestException(requestOptions, response);
         case 401:

@@ -166,9 +166,9 @@ class UserDefinedException with Failure {
 
   @override
   // TODO: implement message
-  String get message => throw UnimplementedError();
+  String get message => _message;
 
   @override
   // TODO: implement title
-  String get title => throw UnimplementedError();
+  String get title => _title;
 }

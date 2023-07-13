@@ -21,11 +21,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         print("Logging In");
         try {
           emit(LoginLoading());
-          var response = await authService.login(
+          Map<String,dynamic> response = await authService.login(
               email: event.email, password: event.password);
+             if(response["message"]=="success"){
+              emit(LoginSuccessful(message: response["message"]));
+             }else{
+              emit(LoginError(failure: UserDefinedException(message: response["message"],title: "Error")));
+             }
           // emit( LoginLoading());
 // server communication
-          emit(LoginSuccessful(message: response["message"]));
+          
         } on Failure catch (failure) {
           emit(LoginError(failure: failure));
         } on SocketException catch (failure) {
