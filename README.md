@@ -91,4 +91,4 @@ AppText.body(
 
 
 ## APK file
-[Download APK:](https://drive.google.com/file/d/10dp8xitY_XNGauZovPjbydYBczYoKP-M/view?usp=sharing)
+[Download APK](https://drive.google.com/file/d/10dp8xitY_XNGauZovPjbydYBczYoKP-M/view?usp=sharing)
